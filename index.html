@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8" />
+    <title>Gott Nytt År 🎆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", system-ui, sans-serif;
+            background: radial-gradient(circle at bottom, #0a0f2c, #02040f);
+            color: white;
+            text-align: center;
+        }
+        ul {
+            list-style: none; /* remove default bullets */
+            padding: 0;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        ul li {
+            position: relative;
+            margin: .5rem 0;
+            padding: 1rem 1.5rem 1rem 3rem; /* leave space for bullet */
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+        h1 {
+            margin-top: 40px;
+            font-size: 3rem;
+            letter-spacing: 2px;
+        }
+
+        #message {
+            margin: 40px auto;
+            font-size: 1.8rem;
+            max-width: 800px;
+            padding: 20px 30px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 16px;
+            backdrop-filter: blur(6px);
+            transition: opacity 0.8s ease;
+        }
+
+        #clock {
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        /* Fyrverkeri SVG */
+        svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .firework {
+            animation: explode 3s infinite ease-out;
+            transform-origin: center;
+        }
+
+        .firework:nth-child(2) { animation-delay: 1s; }
+        .firework:nth-child(3) { animation-delay: 2s; }
+
+        @keyframes explode {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            30% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎉 Nyårsafton 🎉</h1>
+<div id="clock"></div>
+
+<div id="message">
+    Väntar på kvällens firande...
+</div>
+
+<!-- SVG Fyrverkerier -->
+<svg viewBox="0 0 1000 600">
+    <g class="firework" transform="translate(300 200)">
+        <circle r="4" fill="gold"/>
+        <circle r="80" fill="none" stroke="gold" stroke-width="2"/>
+        <circle r="120" fill="none" stroke="orange" stroke-width="1"/>
+    </g>
+
+    <g class="firework" transform="translate(700 250)">
+        <circle r="4" fill="cyan"/>
+        <circle r="90" fill="none" stroke="cyan" stroke-width="2"/>
+        <circle r="140" fill="none" stroke="lightblue" stroke-width="1"/>
+    </g>
+
+    <g class="firework" transform="translate(500 150)">
+        <circle r="4" fill="hotpink"/>
+        <circle r="70" fill="none" stroke="hotpink" stroke-width="2"/>
+        <circle r="110" fill="none" stroke="violet" stroke-width="1"/>
+    </g>
+</svg>
+
+<script>
+    const messages = [
+        { time: "17", text: `Enligt nya traditioner firar man det nya året med en skål!
+                Dags att göra en drink!<br />
+                Ingredienser finns i paketet!` },
+        { time: "18", text: `<h2>Nyårsbingo</h2>
+<p>Ni alla säljer ju en himla massa lotter genom era sporter runt jul och nyår.
+Nu är det dags för er att spela bingo.
+Vem lyckas kryssa en bingorad först?</p>
+<ul>
+<li>Jag har gett någon en kram</li>
+<li>Jag har hört någon utbringa en skål</li>
+<li>Jag har berömt någons kläder.</li>
+<li>Jag har hål i strumpan</li>
+<li>Jag har hjälpt till i köket</li>
+<li>Jag har hälsat artigt på alla gäster</li>
+<li>Mina ytterskor står prydligt i hallen</li>
+<li>Jag vet vart mitt glas står</li>
+                </ul>`
+        },
+        { time: "19", text: `<p>Att dokumentera trevliga sammankomster har alltid varit en tredition.
+Före våra smarta telefoner använde vi en klassisk kamera.</p>
+<p>Man kunde då bara ta 27 kort per film och fick sedan vänta med att se bilderna tills fotobutiken förvandlat kamerans film till bilder.
+Ni får nu chansen att dokumentera festen på gammalt vis.</p> 
+<p>Tänk på att det bara går att ta 27 kort. <em>Så typ 3 var...</em> <br /> Försök gärna få med <strong>alla</strong> gäster på någon bild.</p>` },
+        
+        { time: "20", text: `<p>Förr trodde man på små vättar!</p>
+<p>Varje hem hade en liten vätte som vaktade och beskyddade människorna och djuren som bodde där.</p>
+ <p>Idag kallar vi vätten för Nisse och vid jul flyttar fortfarande nissen in hos många familjer.</p>
+<p>Finns det någon nisse i detta hem som kanske har något gott att bjuda på?</p>` },
+        { time: "21", text: `<p>Denna timme får ni en nyckel.</p>
+ <p>Den går till en skatt som jag fått låna från dumbeldores bibliotek. Kan ni hitta den?</p>` },
+        { time: "22", text: `<p>I den gamla folktron ansågs nyårsnatten ha magiska krafter.</p> 
+        <p>Man försökte förutspå framtiden. Ska vi göra ett försök?</p>
+        <p>I paketet finns 6 kort.</p>
+        <ul>
+<li>lägg korten upp och ner och blanda medurs.</li>
+<li>lägg ut tre kort uppochner framför dig eller den du spår.</li>
+<li>vänd upp kortet i mitten först.</li>
+</ul>
+<p>
+Detta symbolerarar någonting som kommer ha betydelse för dig under nästa år.</br>
+Kortet till vänster symboliserar början av året och kortet till höger slutet av året. </p>
+</p>
+Börjar året kanske med kärlek? Och slutar det kanske med en vinst?</p>` },
+        { time: "23", text: `<p>Tidigare trodde man att man kunde skrämma bort onda andar genom att skjuta skott mot de olika väderstrecken.
+ Detta anses vara ursprunget till dagens fyrverkerier. </p>
+ <p>
+Är det snart dags att skrämma bort några andar? </p>
+<p>Lös denna gåta för att öppna låset.</p>
+<p>
+<em>En viktig ingrediens i knäck blir om man läser det baklänges en huvudstad.
+I denna stad finns ett känt torn. Hur högt är detta torn enligt Wikipedia.</em></p>` },
+        { time: "0", text: "GOTT NYTT ÅR! 🎉✨🥂" }
+    ];
+
+    const messageEl = document.getElementById("message");
+    const clockEl = document.getElementById("clock");
+
+
+    function updateMessage() {
+        const now = new Date();
+        const forcedHour = getForcedHour();
+
+        const hour = forcedHour ?? now.getHours();
+
+        clockEl.textContent =
+            forcedHour !== null
+                ? `Testläge – simulerad tid: ${hour}:00`
+                : "Klockan är " + now.toLocaleTimeString("sv-SE");
+
+        if (hour > 0 && hour < 17) {
+            messageEl.textContent = "GOTT NYTT ÅR! 🎉✨🥂";
+            return;
+        }
+
+        const message =
+            messages.findLast(m => Number(m.time) === hour)
+            ?? messages[0];
+
+        messageEl.innerHTML = message.text;
+    }
+    function getForcedHour() {
+        const hash = window.location.hash.replace("#", "");
+        return isHour(hash)?Number(hash) : null;
+
+    }
+    function isHour(str) {
+        return /^\d{1,2}$/.test(str) && Number(str) <= 23;
+    }
+
+
+    updateMessage();
+    //setInterval(updateMessage, 1000);
+</script>
+
+</body>
+</html>
