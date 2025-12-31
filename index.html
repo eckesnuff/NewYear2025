@@ -13,6 +13,27 @@
             color: white;
             text-align: center;
         }
+        .prelude {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            backdrop-filter: blur(6px);
+        }
+
+        .prelude h2 {
+            margin: 0 0 0.5rem;
+            font-weight: 600;
+        }
+
+        .countdown {
+            font-size: 2rem;
+            letter-spacing: 0.15em;
+            margin-top: 0.5rem;
+            color: #FFD700;
+            font-family: monospace;
+        }
         ul {
             list-style: none; /* remove default bullets */
             padding: 0;
@@ -94,6 +115,11 @@
 <div id="message">
     Väntar på kvällens firande...
 </div>
+<div id="prelude" class="prelude">
+    <h2>✨ Väntar på kvällens firande ✨</h2>
+    <p>Första aktiviteten börjar om</p>
+    <div id="countdown" class="countdown">--:--:--</div>
+</div>
 
 <!-- SVG Fyrverkerier -->
 <svg viewBox="0 0 1000 600">
@@ -124,17 +150,7 @@
         { time: "18", text: `<h2>Nyårsbingo</h2>
 <p>Ni alla säljer ju en himla massa lotter genom era sporter runt jul och nyår.
 Nu är det dags för er att spela bingo.
-Vem lyckas kryssa en bingorad först?</p>
-<ul>
-<li>Jag har gett någon en kram</li>
-<li>Jag har hört någon utbringa en skål</li>
-<li>Jag har berömt någons kläder.</li>
-<li>Jag har hål i strumpan</li>
-<li>Jag har hjälpt till i köket</li>
-<li>Jag har hälsat artigt på alla gäster</li>
-<li>Mina ytterskor står prydligt i hallen</li>
-<li>Jag vet vart mitt glas står</li>
-                </ul>`
+Lyckas du få en full rad? Eller kanske <strong>alla</strong> rutor på bingobrickan?</p>`
         },
         { time: "19", text: `<p>Att dokumentera trevliga sammankomster har alltid varit en tredition.
 Före våra smarta telefoner använde vi en klassisk kamera.</p>
@@ -150,7 +166,7 @@ Ni får nu chansen att dokumentera festen på gammalt vis.</p>
  <p>Den går till en skatt som jag fått låna från dumbeldores bibliotek. Kan ni hitta den?</p>` },
         { time: "22", text: `<p>I den gamla folktron ansågs nyårsnatten ha magiska krafter.</p> 
         <p>Man försökte förutspå framtiden. Ska vi göra ett försök?</p>
-        <p>I paketet finns 6 kort.</p>
+        <p>I paketet finns det fem kort.</p>
         <ul>
 <li>lägg korten upp och ner och blanda medurs.</li>
 <li>lägg ut tre kort uppochner framför dig eller den du spår.</li>
@@ -160,7 +176,7 @@ Ni får nu chansen att dokumentera festen på gammalt vis.</p>
 Detta symbolerarar någonting som kommer ha betydelse för dig under nästa år.</br>
 Kortet till vänster symboliserar början av året och kortet till höger slutet av året. </p>
 </p>
-Börjar året kanske med kärlek? Och slutar det kanske med en vinst?</p>` },
+Börjar året kanske med ny vänskap? Slutar det med en utmaning?</p>` },
         { time: "23", text: `<p>Tidigare trodde man att man kunde skrämma bort onda andar genom att skjuta skott mot de olika väderstrecken.
  Detta anses vara ursprunget till dagens fyrverkerier. </p>
  <p>
@@ -174,7 +190,44 @@ I denna stad finns ett känt torn. Hur högt är detta torn enligt Wikipedia.</e
 
     const messageEl = document.getElementById("message");
     const clockEl = document.getElementById("clock");
+    const startHour = 17;
+    const preludeEl = document.getElementById("prelude");
+    const countdownEl = document.getElementById("countdown");
 
+    function updatePrelude() {
+
+        const now = new Date();
+        const forcedHour = getForcedHour();
+
+        const hour = forcedHour ?? now.getHours();
+
+        const start = new Date(now);
+        start.setHours(startHour, 0, 0, 0);
+
+        // Om vi redan passerat 17:00
+        if (hour >= startHour) {
+            preludeEl.style.display = "none";
+            messageEl.style.display = "block";
+            return;
+        }
+
+        // Visa vänteläget
+        preludeEl.style.display = "block";
+        messageEl.style.display = "none";
+
+        const diffMs = start - now;
+        const totalSeconds = Math.floor(diffMs / 1000);
+
+        const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
+        const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+        const seconds = String(totalSeconds % 60).padStart(2, "0");
+
+        countdownEl.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    // Kör varje sekund
+    updatePrelude();
+    setInterval(updatePrelude, 1000);
 
     function updateMessage() {
         const now = new Date();
@@ -187,8 +240,11 @@ I denna stad finns ett känt torn. Hur högt är detta torn enligt Wikipedia.</e
                 ? `Testläge – simulerad tid: ${hour}:00`
                 : "Klockan är " + now.toLocaleTimeString("sv-SE");
 
-        if (hour > 0 && hour < 17) {
+        if (hour > 0 && hour < 6) {
             messageEl.textContent = "GOTT NYTT ÅR! 🎉✨🥂";
+            return;
+        }
+        else if (hour < 17) {
             return;
         }
 
@@ -209,7 +265,7 @@ I denna stad finns ett känt torn. Hur högt är detta torn enligt Wikipedia.</e
 
 
     updateMessage();
-    //setInterval(updateMessage, 1000);
+    setInterval(updateMessage, 1000);
 </script>
 
 </body>
